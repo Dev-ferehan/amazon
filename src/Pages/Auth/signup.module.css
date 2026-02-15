@@ -1,0 +1,79 @@
+.loginContainer {
+    background-color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .loginLogo {
+    width: 100px;
+    object-fit: contain;
+    margin-bottom: 20px;
+  }
+  
+  .loginFormBox {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 20px 25px;
+  }
+  
+  .loginFormBox h1 {
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+  
+  .loginFormBox form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .loginFormBox label {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .loginFormBox input {
+    height: 30px;
+    margin-bottom: 15px;
+    background-color: #e7f0fe; /* Matches the blue-ish tint in your image */
+    border: 1px solid #a6a6a6;
+    border-radius: 3px;
+    padding-left: 10px;
+  }
+  
+  .signInButton {
+    background: #f0c14b;
+    border-radius: 3px;
+    width: 100%;
+    height: 30px;
+    border: 1px solid;
+    margin-top: 10px;
+    border-color: #a88734 #9c7e31 #846a29;
+    cursor: pointer;
+  }
+  
+  .termsText {
+    margin-top: 15px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  
+  .createAccountButton {
+    background: #eff1f3;
+    border-radius: 3px;
+    width: 100%;
+    height: 30px;
+    border: 1px solid;
+    margin-top: 20px;
+    border-color: #d8d8d8;
+    cursor: pointer;
+    font-size: 13px;
+  }

@@ -8,9 +8,10 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import classes from "./header.module.css";
 import {Link} from 'react-router-dom';
 import { useContext } from "react";
+import {auth} from '../../Utility/firebase.js'
 import {DataContext} from '../DataProvider/DataContext.jsx'
 const Header = () => {
-  const [{basket},dispatch]=useContext(DataContext)
+  const [{basket,user},dispatch]=useContext(DataContext)
 const totalItem=basket?.reduce((amount,item)=>{
   return item.amount+amount
 },0)
@@ -52,9 +53,24 @@ const totalItem=basket?.reduce((amount,item)=>{
               </select>
             </Link>
           </div>
-          <Link to="/auth" className={classes.signIn}>
-            <p>Sign In</p>
+          <Link to={!user && '/auth'} className={classes.signIn}>
+         
+            <div>
+              
+            {  user?(
+              <> 
+               <p>hello {user?.email.split('@')[0]} </p>
+                <span onClick={()=>auth.signOut()}>sign out</span> 
+                </>
+               ):( 
+             <>
+                  <p>Sign In</p>
             <span>Account & Lists</span>
+            </>
+
+                  )}
+              
+            </div>
           </Link>
 
           <Link to="/order" className={classes.return}>
