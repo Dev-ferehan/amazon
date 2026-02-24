@@ -7,20 +7,24 @@
 .payment{
 padding: 30px;
 }
-
-.flexs{
+.loading{
+    display: flex;
+    justify-content: center;
+    gap: 5;
+}
+.flx{
     display: flex;
     gap: 20px;
     padding: 30px;
 
 }
-.flexs h3{
+.flx h3{
     min-width: 300px;
 }
-.flexs img{
+.flx img{
 width: 80px !important;
 }
-.flexs div{
+.flx div{
     height: auto !important;
 }
 .payment_card_container{
@@ -48,7 +52,7 @@ cursor: pointer;
     background-color: var(--primary-shade);
 }
 @media screen and (max-width: 768px){
-    .flexs{
+    .flx{
         flex-direction: column;
     }
 }

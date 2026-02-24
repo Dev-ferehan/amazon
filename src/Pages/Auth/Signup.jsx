@@ -8,29 +8,31 @@ import {ClipLoader} from 'react-spinners'
 import {signInWithEmailAndPassword,
   createUserWithEmailAndPassword} from 'firebase/auth';
 import {DataContext} from '../../Components/DataProvider/DataContext'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 function Signup() {
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
   const [error,setError]=useState("");
-  const [loading,setLoading]=useState({signIn:false,signup:false});
-  const [user,dispatch]=useContext(DataContext)
+  const [loading,setLoading]=useState({signIn:false, signup:false});
+  const [{user},dispatch]=useContext(DataContext)
   console.log(user);
   const navigate=useNavigate();
+  const stateNav= useLocation();
+  console.log("state nav new",stateNav)
   const authHandler=async (e)=>{
     e.preventDefault();
 if(e.target.name === 'signin'){
   setLoading({signIn:true})
-signInWithEmailAndPassword(auth,email,password).then((userifo)=>{ 
+signInWithEmailAndPassword(auth,email,password).then((userinfo)=>{ 
   dispatch({
     type:Type.SET_USER,
-    user:userifo.user
+    user:userinfo.user,
   })
-  setLoading({signIn:false}) 
-  navigate('/')
+  setLoading({...loading,signIn:false}) 
+  navigate(stateNav?.state?.redirect || "/")
 }
 ).catch((err)=>{
-  setLoading({signIn:false}) 
+  setLoading({...loading,signIn:false}) 
   setError(err.message)
 });
 }else{
@@ -41,13 +43,14 @@ createUserWithEmailAndPassword(auth,email,password).then((userinfo)=>{
     type:Type.SET_USER,
     user:userinfo.user
   })
-  navigate('/')
 
-  setLoading({signup:false})
+  setLoading({...loading, signup:false})
+  navigate(stateNav?.state?.redirect || "/")
+
 
 }).catch((err)=>{ 
    setError(err.message);
-  setLoading({signup:false})
+  setLoading({...loading,signup:false})
 
 })
 }
@@ -67,7 +70,23 @@ createUserWithEmailAndPassword(auth,email,password).then((userinfo)=>{
 
       <div className={styles.loginFormBox}>
         <h1>Sign In</h1>
+{
+stateNav?.state?.msg && (
+<small style={
+    {
+    
+        padding:"5px",
+        textAlign:"center",
+        color:"red",
+        fontWeight:"bold",
+      }
+      }>
+      {stateNav?.state?.msg}
+  
 
+  </small>
+)
+}
         <form>
           <label htmlFor="email">Email</label>
           <input value={email} onChange={(e)=>setEmail(e.target.value)} type="email" id="email"  />

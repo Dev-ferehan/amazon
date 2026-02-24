@@ -1,15 +1,20 @@
 import React, { useContext, useState } from "react";
 import classes from "./payment.module.css";
+import {MoonLoader } from 'react-spinners'
 import Layout from "../../Components/Layout/Layout";
 import { DataContext } from "../../Components/DataProvider/DataContext";
 import ProductCard from "../../Components/PRODUCT/ProductCard";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import CurrentFormat from "../../Components/CurrentFormate/CurrentFormat";
-
+import { axiosInstance } from "../../Api/axios";
+import { db} from "../../Utility/firebase"
+import { Navigate, useNavigate } from "react-router-dom";
 function Payment() {
   const [cardError, setCardError] = useState(null);
+  const [processing,setProcessing]=useState(false);
   const [{ basket, user }, dispatch] = useContext(DataContext);
-  console.log(user.email, dispatch);
+console.log(dispatch)
+  // console.log(user.email, dispatch);
   const total = basket.reduce((amount, item) => {
     return item.price * item.amount + amount;
   }, 0);
@@ -19,29 +24,68 @@ function Payment() {
 
   const stripe = useStripe();
   const elements = useElements();
+  // console.log(stripe, elements);
+const navigate=useNavigate();
+  const handlePayment = async (e) => {
+    e.preventDefault();
+    try {
+      setProcessing(true)
+      const response = await axiosInstance({
+        method: "POST",
+        url: `/payment/create?total=${total * 100}`,
+      });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!stripe || !elements) return;
+      console.log(response.data);
+      const clientSecret = response.data?.clientSecret;
 
-    const cardElement = elements.getElement(CardElement);
-
-    const { paymentIntent, error } = await stripe.confirmCardPayment(
-      "YOUR_CLIENT_SECRET_FROM_BACKEND",
-      {
+      const {paymentIntent}= await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
-          card: cardElement,
+          card:elements.getElement(CardElement),
         },
-      },
-    );
-
-    if (error) {
-      console.log(error.message);
-    } else {
-      console.log("succesfully pay", paymentIntent);
-   
+      })
+      await db.collection("users").doc(user.uid).collection("orders").doc(paymentIntent.id).set({
+        basket:basket,
+        amount:paymentIntent.amount,
+        created:paymentIntent.created,
+      });
+      console.log(paymentIntent)
+      setProcessing(false)
+      navigate("/orders",{state:{msg:"you have placed new order"}});
+    } catch (error) {
+      setProcessing(false);
+      console.log(error);
     }
   };
+
+  //   const handleSubmit = async (event) => {
+  //     event.preventDefault();
+  //     try{
+  //       const response=await axiosInstance({
+  //         method:"POST",
+  //         url:`/payment/create?total=${total}`,
+  //       });
+  //       console.log(response.data);
+  //     }catch(error){
+  // console.log(error)
+  //     }
+  //     if (!stripe || !elements) return;
+
+  // const cardElement = elements.getElement(CardElement);
+  // const { paymentIntent, error } = await stripe.confirmCardPayment(
+  //   "YOUR_CLIENT_SECRET_FROM_BACKEND",
+  //   {
+  //     payment_method: {
+  //       card: cardElement,
+  //     },
+  //   },
+  // );
+
+  // if (error) {
+  //   console.log(error.message);
+  // } else {
+  //   console.log(" pay", paymentIntent);
+  // }
+
   const handleChange = (e) => {
     e?.error?.message ? setCardError(e?.error?.message) : setCardError("");
   };
@@ -53,7 +97,7 @@ function Payment() {
       </div>
       {/* payment method */}
       <section className={classes.Payment}>
-        <div className={classes.flexs}>
+        <div className={classes.flx}>
           <h3>Delivery Address</h3>
           <div>
             <div>{user?.email}</div>
@@ -64,7 +108,7 @@ function Payment() {
         <hr />
 
         {/* product */}
-        <div className={classes.flexs}>
+        <div className={classes.flx}>
           <h3>Review items and delivery</h3>
           <div>
             {basket?.map((item) => (
@@ -74,23 +118,32 @@ function Payment() {
         </div>
         <hr />
         {/* card form */}
-        <div className={classes.flexs}>
+        <div className={classes.flx}>
           <h3>Payment methods</h3>
           <div className={classes.payment_card_container}>
-            <div className={classes.payment__details} >
-              <form action="" onSubmit={handleSubmit}>
+            <div className={classes.payment__details}>
+              <form action="" onSubmit={handlePayment}>
                 {cardError && (
                   <small style={{ color: "red" }}>{cardError}</small>
                 )}
 
                 <CardElement onChange={handleChange} />
-                <div className={classes.payment__price} >
+                <div className={classes.payment__price}>
                   <div>
-                    <span style={{display:"flex",gap:'10'}} >
-                     <p> Total Order | </p><CurrentFormat amount={total} />
+                    <span style={{ display: "flex", gap: "10" }}>
+                      <p> Total Order | </p>
+                      <CurrentFormat amount={total} />
                     </span>
                   </div>
-                  <button>Pay Now</button>
+                  <button type="submit">
+                    {
+                      processing?(
+                      <div className={classes.loading}>
+                        <MoonLoader size={12} /> 
+                        <p>please wait ...</p>
+                      </div>):("pay now")
+                    }
+                     </button>
                 </div>
               </form>
             </div>
