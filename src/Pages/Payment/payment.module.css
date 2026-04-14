@@ -1,58 +1,57 @@
-.payment__header{
-    padding: 20px;
-    text-align: center;
-    font-size: 24px;
-    background-color: rgb(234,237,237);
+.payment__header {
+  padding: 20px;
+  text-align: center;
+  font-size: 24px;
+  background-color: rgb(234, 237, 237);
 }
-.payment{
-padding: 30px;
+.payment {
+  padding: 30px;
 }
-.loading{
-    display: flex;
-    justify-content: center;
-    gap: 5;
+.loading {
+  display: flex;
+  justify-content: center;
+  gap: 5;
 }
-.flx{
-    display: flex;
-    gap: 20px;
-    padding: 30px;
-
+.flx {
+  display: flex;
+  gap: 20px;
+  padding: 30px;
 }
-.flx h3{
-    min-width: 300px;
+.flx h3 {
+  min-width: 300px;
 }
-.flx img{
-width: 80px !important;
+.flx img {
+  width: 80px !important;
 }
-.flx div{
-    height: auto !important;
+.flx div {
+  height: auto !important;
 }
-.payment_card_container{
+.payment_card_container {
   min-width: 350px;
-  width: 100%;  
+  width: 100%;
 }
-.payment__price{
-  font-size: 20px;  
+.payment__price {
+  font-size: 20px;
 }
-.payment__price > div{
-display: flex;
-font-size: 16px;
-gap: 10px;
+.payment__price > div {
+  display: flex;
+  font-size: 16px;
+  gap: 10px;
 }
-.payment__details button{
-margin-top: 15px;
-width: 100%;
-border: none;
-background-color: var(--primary-color);
-border-radius: 5px;
-padding: 8px 10px;
-cursor: pointer;
+.payment__details button {
+  margin-top: 15px;
+  width: 100%;
+  border: none;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  padding: 8px 10px;
+  cursor: pointer;
 }
-.payment__details button:hover{
-    background-color: var(--primary-shade);
+.payment__details button:hover {
+  background-color: var(--primary-shade);
 }
-@media screen and (max-width: 768px){
-    .flx{
-        flex-direction: column;
-    }
+@media screen and (max-width: 768px) {
+  .flx {
+    flex-direction: column;
+  }
 }

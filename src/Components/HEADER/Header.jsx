@@ -1,21 +1,21 @@
 import React from "react";
-import amazon_logo from "./img/amazon-logo.png";
+import amazon_logo from "./img/amazon_logo.png";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchIcon from "@mui/icons-material/Search";
 import Flag from "./img/america_flag.png";
 import LowerHeader from "./LowerHeader";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import classes from "./header.module.css";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useContext } from "react";
-import {auth} from '../../Utility/firebase.js'
-import {DataContext} from '../DataProvider/DataContext.jsx'
+import { auth } from "../../Utility/firebase.js";
+import { DataContext } from "../DataProvider/DataContext.jsx";
 const Header = () => {
-  const [{basket,user},dispatch]=useContext(DataContext)
-  console.log(dispatch)
-const totalItem=basket?.reduce((amount,item)=>{
-  return item.amount+amount
-},0)
+  const [{ basket, user }, dispatch] = useContext(DataContext);
+  console.log(dispatch);
+  const totalItem = basket?.reduce((amount, item) => {
+    return item.amount + amount;
+  }, 0);
   return (
     <section className={classes.fixed}>
       <section>
@@ -54,23 +54,18 @@ const totalItem=basket?.reduce((amount,item)=>{
               </select>
             </Link>
           </div>
-          <Link to={!user && '/auth'} className={classes.signIn}>
-         
+          <Link to={!user && "/auth"} className={classes.signIn}>
             <div>
-              
-            {  user?(
-              <> 
-               <p>hello {user?.email.split('@')[0]} </p>
-                <span onClick={()=>auth.signOut()}>sign out</span> 
+              {user ?
+                <>
+                  <p>hello {user?.email.split("@")[0]} </p>
+                  <span onClick={() => auth.signOut()}>sign out</span>
                 </>
-               ):( 
-             <>
+              : <>
                   <p>Sign In</p>
-            <span>Account & Lists</span>
-            </>
-
-                  )}
-              
+                  <span>Account & Lists</span>
+                </>
+              }
             </div>
           </Link>
 
