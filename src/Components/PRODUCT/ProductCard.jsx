@@ -12,6 +12,7 @@ function ProductCard({ product, flux ,renderDesc, addButton}) {
 
      const [state,dispatch]=useContext(DataContext)
 // console.log("prodect Card state",state)
+console.log(state)
 const addToCart=()=>{
   dispatch({
     type:Type.ADD_TO_BASKET,

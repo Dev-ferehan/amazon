@@ -24,9 +24,9 @@ function Routering() {
           <Payment/>
              </Elements>          
            </ProtectedRoute>} />
-        <Route path='Orders' element={
+        <Route path='/Orders' element={
 
-          <ProtectedRoute msg={"you must log in to access your orders"} redirect={"Orders"}>
+          <ProtectedRoute msg={"you must log in to access your orders"} redirect={"/Orders"}>
           <Orders/>
           </ProtectedRoute>
           

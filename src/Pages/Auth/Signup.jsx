@@ -57,7 +57,7 @@ createUserWithEmailAndPassword(auth,email,password).then((userinfo)=>{
   }
   return (
     <div>
-   <Layout>
+
 
     <div className={styles.loginContainer}>
 <Link to='/'>
@@ -118,10 +118,6 @@ stateNav?.state?.msg && (
         }
       </div>
     </div>
-
-
-
-   </Layout>
     </div>
   )
 }

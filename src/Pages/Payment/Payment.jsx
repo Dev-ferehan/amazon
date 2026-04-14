@@ -9,6 +9,7 @@ import CurrentFormat from "../../Components/CurrentFormate/CurrentFormat";
 import { axiosInstance } from "../../Api/axios";
 import { db} from "../../Utility/firebase"
 import { Navigate, useNavigate } from "react-router-dom";
+import { Type } from "../../Utility/action.type";
 function Payment() {
   const [cardError, setCardError] = useState(null);
   const [processing,setProcessing]=useState(false);
@@ -48,6 +49,7 @@ const navigate=useNavigate();
         amount:paymentIntent.amount,
         created:paymentIntent.created,
       });
+      dispatch({type:Type.EMPTY_BASKET})
       console.log(paymentIntent)
       setProcessing(false)
       navigate("/orders",{state:{msg:"you have placed new order"}});
