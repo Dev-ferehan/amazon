@@ -17,6 +17,8 @@ auth.onAuthStateChanged((authUser)=>{
   dispatch({
     type:Type.SET_USER,
     user:authUser
+
+
   })
  }else{
   dispatch({
@@ -29,7 +31,7 @@ user:null
 },[])
   return (
     <>
-
+<h2>hello</h2>
     
  <Routering/>
 
