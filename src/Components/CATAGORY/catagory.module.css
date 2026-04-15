@@ -1,5 +1,6 @@
 .catagory {
-  height: 430px;
+  /* height: max-content; */
+  /* max-height: 435px; */
   width: 280px;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

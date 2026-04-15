@@ -1,0 +1,52 @@
+.container{
+display: flex;
+}
+.arrow{
+    margin-top: 9%;
+    cursor: pointer;
+}
+.shelf_container{
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    padding: 20px;
+    scroll-behavior: smooth;
+  
+}
+.shelf_container:hover{
+
+}
+.shelf_container::-webkit-scrollbar {
+    display: none;
+}
+
+.shelf_container img{
+    width:15%;
+    padding: 3px; 
+}
+.shelf_container img:hover{
+  transform: scale(1.06);
+
+}
+h2{
+    margin: 10px 20px;
+}
+@media (max-width: 600px) { 
+    .shelf_container img{
+        width:25%;
+        
+    }
+ }
+@media (min-width: 600px) { 
+    .shelf_container img{
+        width:20%;
+        
+    }
+ }
+ @media (min-width: 1200px) { 
+    .shelf_container img{
+        width:15%;
+        
+    }
+ }
+

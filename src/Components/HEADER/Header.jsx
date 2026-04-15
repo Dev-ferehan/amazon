@@ -63,7 +63,7 @@ const Header = () => {
                 </>
               : <>
                   <p>Sign In</p>
-                  <span>Account & Lists</span>
+                  <span><b>Account & Lists</b></span>
                 </>
               }
             </div>
@@ -71,7 +71,7 @@ const Header = () => {
 
           <Link to="/Orders" className={classes.return}>
             <p>returns</p>
-            <span>& Orders</span>
+            <span><b>& Orders</b></span>
           </Link>
 
           <Link to="/cart" className={classes.cart}>
